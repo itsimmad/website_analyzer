@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Website Analyzer</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="/static/styles.css" rel="stylesheet">
+</head>
+<body class="bg-gray-900 text-gray-100 min-h-screen">
+    <!-- Top Navigation -->
+    <nav class="bg-gray-800 border-b border-gray-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <i class="fas fa-robot text-blue-500 text-2xl"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="relative bg-gray-900 overflow-hidden py-12">
+        <div class="max-w-7xl mx-auto text-center">
+            <h1 class="text-4xl tracking-tight font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-blue-600 sm:text-5xl md:text-6xl">
+                <span class="block">Audit Your Website Like a Pro</span>
+                <span class="block text-blue-400 text-3xl mt-4">Powered by CodeNimbuz</span>
+            </h1>
+            <p class="mt-3 text-base text-gray-300 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl">
+                Use our AI agent to scan your site like a real analyst would and see what’s working, what’s broken and how to fix it.
+            </p>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Input Form -->
+        <div class="bg-gray-800 rounded-lg shadow-xl p-6 mb-8 transform transition-all duration-300 hover:shadow-2xl">
+            <form id="analysisForm" class="space-y-4">
+                <div>
+                    <label for="url" class="block text-sm font-medium text-gray-300">Website URL</label>
+                    <div class="mt-1 flex rounded-md shadow-sm">
+                        <input type="url" name="url" id="url" required
+                            class="flex-1 min-w-0 block w-full px-3 py-2 rounded-md border border-gray-600 bg-gray-700 text-white focus:ring-blue-500 focus:border-blue-500"
+                            placeholder="https://example.com">
+                    </div>
+                </div>
+                <div class="flex items-center">
+                    <input type="checkbox" id="useAI" name="useAI"
+                        class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-600 rounded bg-gray-700">
+                    <label for="useAI" class="ml-2 block text-sm text-gray-300">
+                        Enable Professional Analysis
+                    </label>
+                </div>
+                <button type="submit"
+                    class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transform transition-all duration-300 hover:scale-105">
+                    <i class="fas fa-robot mr-2"></i>Analyze Website
+                </button>
+            </form>
+        </div>
+
+        <!-- Loading Animation -->
+        <div id="loadingAnimation" class="hidden">
+            <div class="flex flex-col items-center justify-center space-y-4">
+                <div class="jarvis-loader">
+                    <div class="circle"></div>
+                    <div class="circle"></div>
+                    <div class="circle"></div>
+                </div>
+                <p class="text-blue-400 text-lg font-medium">Analyzing website...</p>
+            </div>
+        </div>
+
+        <!-- Results Section -->
+        <div id="results" class="hidden">
+            <div class="bg-gray-800 rounded-2xl shadow-2xl overflow-hidden p-6 flex flex-col items-center">
+                <!-- Tab Navigation -->
+                <div class="w-full flex justify-center mb-6">
+                    <nav class="flex space-x-4 md:space-x-8">
+                        <button class="tab-button uppercase font-bold text-lg px-6 py-3 rounded-lg bg-gray-700 text-blue-400 hover:bg-blue-600 hover:text-white transition-all duration-200 shadow-md flex items-center gap-2 active" data-tab="ux">
+                            <i class="fas fa-user-friends"></i> UX Analysis
+                        </button>
+                        <button class="tab-button uppercase font-bold text-lg px-6 py-3 rounded-lg bg-gray-700 text-blue-400 hover:bg-blue-600 hover:text-white transition-all duration-200 shadow-md flex items-center gap-2" data-tab="seo">
+                            <i class="fas fa-search"></i> SEO Analysis
+                        </button>
+                        <button class="tab-button uppercase font-bold text-lg px-6 py-3 rounded-lg bg-gray-700 text-blue-400 hover:bg-blue-600 hover:text-white transition-all duration-200 shadow-md flex items-center gap-2" data-tab="performance">
+                            <i class="fas fa-tachometer-alt"></i> Performance Analysis
+                        </button>
+                    </nav>
+                </div>
+
+                <!-- Tab Content -->
+                <div class="w-full">
+                    <!-- UX Analysis Tab -->
+                    <div id="ux" class="tab-content active">
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
+                            <!-- Score Card with Chart.js -->
+                            <div class="score-card bg-gray-900 rounded-xl shadow-lg p-6 flex flex-col items-center justify-center">
+                                <canvas id="uxScoreChart" width="160" height="160" class="mb-4"></canvas>
+                                <div class="text-center mt-2">
+                                    <div class="text-3xl font-bold text-blue-400" id="uxScoreText">0%</div>
+                                    <div class="text-gray-400 text-lg font-semibold">UX Score</div>
+                                </div>
+                                <div class="score-error text-xs text-red-400 mt-2" style="display:none"></div>
+                            </div>
+                            <!-- Metrics Cards -->
+                            <div id="uxContent" class="col-span-2 space-y-4"></div>
+                        </div>
+                    </div>
+                    <!-- SEO Analysis Tab -->
+                    <div id="seo" class="tab-content">
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
+                            <!-- Score Card with Chart.js -->
+                            <div class="score-card bg-gray-900 rounded-xl shadow-lg p-6 flex flex-col items-center justify-center">
+                                <canvas id="seoScoreChart" width="160" height="160" class="mb-4"></canvas>
+                                <div class="text-center mt-2">
+                                    <div class="text-3xl font-bold text-blue-400" id="seoScoreText">0%</div>
+                                    <div class="text-gray-400 text-lg font-semibold">SEO Score</div>
+                                </div>
+                                <div class="score-error text-xs text-red-400 mt-2" style="display:none"></div>
+                            </div>
+                            <!-- Metrics Cards -->
+                            <div id="seoContent" class="col-span-2 space-y-4"></div>
+                        </div>
+                    </div>
+                    <!-- Performance Analysis Tab -->
+                    <div id="performance" class="tab-content">
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
+                            <!-- Score Card with Chart.js -->
+                            <div class="score-card bg-gray-900 rounded-xl shadow-lg p-6 flex flex-col items-center justify-center">
+                                <canvas id="performanceScoreChart" width="160" height="160" class="mb-4"></canvas>
+                                <div class="text-center mt-2">
+                                    <div class="text-3xl font-bold text-blue-400" id="performanceScoreText">0%</div>
+                                    <div class="text-gray-400 text-lg font-semibold">Performance Score</div>
+                                </div>
+                                <div class="score-error text-xs text-red-400 mt-2" style="display:none"></div>
+                            </div>
+                            <!-- Metrics Cards -->
+                            <div id="performanceContent" class="col-span-2 space-y-4"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="/static/app.js"></script>
+</body>
+</html> 
