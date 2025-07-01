@@ -442,7 +442,7 @@ class WebsiteAnalyzer:
         """Analyze website performance"""
         try:
             start_time = time.time()
-            response = requests.get(self.url, timeout=10)
+            response = requests.get(self.url, timeout=30)
             load_time = time.time() - start_time
             headers = response.headers
             has_compression = 'gzip' in headers.get('content-encoding', '').lower()
@@ -488,6 +488,10 @@ class WebsiteAnalyzer:
                     "Consider lazy loading for images"
                 ]
             }
+        except requests.exceptions.Timeout:
+            return {"error": "Performance analysis failed: The website took too long to respond.", "score": 0}
+        except requests.exceptions.RequestException as e:
+            return {"error": f"Performance analysis failed: {str(e)}", "score": 0}
         except Exception as e:
             logger.error(f"Error in performance analysis: {str(e)}")
             return {
@@ -559,4 +563,4 @@ def main():
     print(json.dumps(results['performance_analysis'], indent=2))
 
 if __name__ == "__main__":
-    main() 
+    main()
