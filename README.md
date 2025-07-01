@@ -54,7 +54,7 @@ The script will output a detailed analysis including:
 
 ## Demo Video
 
-<video src="URL_TO_YOUR_VIDEO.mp4" controls width="600"></video>
+<video src="https://github.com/itsimmad/website_analyzer/blob/main/Website%20analyzer1.mp4" controls width="600"></video>
 
 ## Notes
 
