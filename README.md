@@ -52,6 +52,10 @@ The script will output a detailed analysis including:
 - SEO analysis with meta tags, alt tags, and heading structure recommendations
 - Performance analysis with load time and optimization suggestions
 
+## Demo Video
+
+<video src="URL_TO_YOUR_VIDEO.mp4" controls width="600"></video>
+
 ## Notes
 
 - The performance analysis currently uses dummy data. To get real performance metrics, you'll need to implement the Google PageSpeed API.
@@ -69,4 +73,4 @@ The script will output a detailed analysis including:
 
 ## License
 
-MIT License 
+MIT License
